@@ -71,19 +71,19 @@ async function loadHotels(append = false) {
 
   try {
     const filters = appState.state.activeFilters;
-    const data = await HotelAPI.fetchHotels(filters);
+    const { hotels, count } = await HotelAPI.fetchHotels(filters);
 
     if (append) {
-      const allHotels = [...appState.state.hotels, ...data];
+      const allHotels = [...appState.state.hotels, ...hotels];
       appState.setState({
         hotels: allHotels,
-        hasMore: data.length === filters.limit,
+        hasMore: hotels.length === filters.limit,
         loading: false
       });
     } else {
       appState.setState({
-        hotels: data,
-        hasMore: data.length === filters.limit,
+        hotels: hotels,
+        hasMore: hotels.length === filters.limit,
         loading: false
       });
     }

@@ -54,7 +54,7 @@ export class HotelAPI {
   /**
    * Fetch all hotels based on filters, pagination, and sorting
    * @param {object} params - Filter and pagination options
-   * @returns {Promise<Array>} List of hotels
+   * @returns {Promise<{hotels: Array, count: number}>} List of hotels and total count
    */
   static async fetchHotels(params = {}) {
     const url = new URL(this.BASE_URL + '/', window.location.origin);
@@ -66,7 +66,17 @@ export class HotelAPI {
       }
     });
 
-    return await this._request(url.toString());
+    const response = await this._request(url.toString());
+
+    // API returns { status, count, returned, message, data: [...] }
+    if (response && Array.isArray(response.data)) {
+      return { hotels: response.data, count: response.count || response.data.length };
+    }
+    // Fallback if raw array is returned
+    if (Array.isArray(response)) {
+      return { hotels: response, count: response.length };
+    }
+    return { hotels: [], count: 0 };
   }
 
   /**
