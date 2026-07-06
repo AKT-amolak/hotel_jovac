@@ -12,6 +12,10 @@ Desktop.ini
 *.sln
 *.sw?
 
+# Node modules and build output
+node_modules/
+dist/
+
 # Temporary files
 *.log
 tmp/
