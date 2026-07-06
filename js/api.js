@@ -57,7 +57,7 @@ export class HotelAPI {
    * @returns {Promise<Array>} List of hotels
    */
   static async fetchHotels(params = {}) {
-    const url = new URL(this.BASE_URL + '/');
+    const url = new URL(this.BASE_URL + '/', window.location.origin);
     
     // Append queries if they are present
     Object.keys(params).forEach(key => {
