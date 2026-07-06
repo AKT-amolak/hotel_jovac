@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxeStay | Premium Hotel Search & Booking</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Discover and book luxury hotel stays in top Indian cities. Explore prices, ratings, and amenities, and manage hotel listings dynamically.">
+  <meta name="keywords" content="hotels, booking, luxury stays, hotel search, India travel">
+  <meta name="author" content="LuxeStay Inc.">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  
+  <!-- Bootstrap Icons CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="dark-mode">
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="container header-container">
+      <div class="brand" id="brand-logo">
+        <div class="brand-icon">
+          <i class="bi bi-building-fill"></i>
+        </div>
+        <span class="brand-name">LUXESTAY</span>
+      </div>
+      
+      <div class="nav-actions">
+        <!-- Add New Hotel Action -->
+        <button class="btn btn-primary" id="btn-add-hotel-trigger">
+          <i class="bi bi-plus-lg"></i> <span>Add Hotel</span>
+        </button>
+        
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+          <i class="bi bi-sun-fill" id="theme-icon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="app-main">
+    
+    <!-- Hero Slider Section -->
+    <section class="hero-section">
+      <div class="hero-carousel-container" id="hero-carousel">
+        <!-- Injected via JavaScript -->
+        <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080');"></div>
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080');"></div>
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080');"></div>
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title animate-scale-up">Find Your Next Signature Experience</h1>
+          <p class="hero-subtitle animate-fade-in">Explore handpicked luxury hotel stays with exclusive deals and seamless booking operations.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Search & Directory -->
+    <section class="container">
+      <div class="dashboard-layout">
+        
+        <!-- Sidebar Filters Column -->
+        <aside class="filter-panel" id="filter-sidebar">
+          <div class="filter-panel-header">
+            <h3 style="font-weight: 700; font-size: 1.15rem;">Filter By</h3>
+            <button class="btn btn-outline btn-sm" id="btn-reset-filters" style="padding: 6px 12px; font-size: 0.8rem;">Reset</button>
+          </div>
+          
+          <!-- Search Field -->
+          <div class="filter-group">
+            <label class="filter-label" for="search-input">Search Stays</label>
+            <div class="search-input-wrapper">
+              <i class="bi bi-search search-icon-inside"></i>
+              <input type="text" id="search-input" class="form-control" placeholder="Search by name or city...">
+            </div>
+          </div>
+          
+          <!-- Price Range Slider -->
+          <div class="filter-group">
+            <label class="filter-label">Max Price Per Night</label>
+            <div class="range-slider-container">
+              <input type="range" id="price-slider" class="range-slider" min="1000" max="15000" step="500" value="15000">
+              <div class="range-values">
+                <span>₹1,000</span>
+                <span id="price-display" style="font-weight: 700; color: var(--primary-accent);">₹15,000</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Minimum Rating -->
+          <div class="filter-group">
+            <label class="filter-label">Minimum Rating</label>
+            <div class="range-slider-container">
+              <input type="range" id="rating-slider" class="range-slider" min="1" max="5" step="0.5" value="1">
+              <div class="range-values">
+                <span>1.0 ★</span>
+                <span id="rating-display" style="font-weight: 700; color: var(--primary-accent);">All Ratings</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Sort Options -->
+          <div class="filter-group">
+            <label class="filter-label" for="sort-select">Sort By</label>
+            <select id="sort-select" class="form-control">
+              <option value="-rating">Top Rated First</option>
+              <option value="rating">Lowest Rated First</option>
+              <option value="price">Price: Low to High</option>
+              <option value="-price">Price: High to Low</option>
+              <option value="name">Name: A to Z</option>
+              <option value="-name">Name: Z to A</option>
+            </select>
+          </div>
+        </aside>
+
+        <!-- Listings Grid Column -->
+        <section class="listings-container">
+          
+          <!-- City Quick Filter Badges -->
+          <div style="margin-bottom: 24px;">
+            <label class="filter-label">Popular Locations</label>
+            <div class="badge-container" id="city-badges">
+              <button class="badge active" data-city="">All Cities</button>
+              <button class="badge" data-city="Ahmedabad">Ahmedabad</button>
+              <button class="badge" data-city="Bengaluru">Bengaluru</button>
+              <button class="badge" data-city="Chennai">Chennai</button>
+              <button class="badge" data-city="Delhi">Delhi</button>
+              <button class="badge" data-city="Goa">Goa</button>
+              <button class="badge" data-city="Gurgaon">Gurgaon</button>
+              <button class="badge" data-city="Hyderabad">Hyderabad</button>
+              <button class="badge" data-city="Jaipur">Jaipur</button>
+              <button class="badge" data-city="Kolkata">Kolkata</button>
+              <button class="badge" data-city="Mumbai">Mumbai</button>
+              <button class="badge" data-city="Noida">Noida</button>
+              <button class="badge" data-city="Pune">Pune</button>
+            </div>
+          </div>
+
+          <!-- Section Grid Header -->
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <h2 style="font-size: 1.5rem; font-weight: 850;" id="results-count-title">Available Listings</h2>
+              <span class="section-subtitle" id="results-count-subtitle">Loading stays...</span>
+            </div>
+          </div>
+
+          <!-- Hotels Display Area -->
+          <div class="hotel-grid" id="hotel-grid">
+            <!-- Dynamic hotel cards injected here -->
+          </div>
+
+          <!-- Load More Trigger -->
+          <div style="display: flex; justify-content: center; margin-top: 40px;" id="pagination-wrapper">
+            <button class="btn btn-secondary" id="btn-load-more" style="min-width: 160px;">
+              <span>Load More Properties</span>
+              <i class="bi bi-chevron-down"></i>
+            </button>
+          </div>
+
+        </section>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="container footer-content">
+      <div class="footer-links">
+        <a href="#brand-logo">Home</a>
+        <a href="https://demohotelsapi.pythonanywhere.com/" target="_blank">API Docs</a>
+        <a href="https://portfolio-aarav.vercel.app" target="_blank">Developer Portfolio</a>
+      </div>
+      <div class="copyright">
+        &copy; 2026 LuxeStay Hotel Directory. Built for educational API integration. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Bootstrap Script -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
